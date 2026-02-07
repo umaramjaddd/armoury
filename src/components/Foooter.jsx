@@ -6,102 +6,95 @@ import { apppName } from "@/constants/appName."
 import Image from "next/image"
 import { FaPhone, FaEnvelope, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
 
-
 export default function Footer() {
   return (
-    <footer className="bg-zinc-900 text-zinc-400 mt-16 px-6 py-12 border-t border-zinc-800">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-zinc-950 text-zinc-400 border-t-amber-950 px-6 py-16 border-t border-zinc-900">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
 
-        {/* Branding */}
-        <div>
-          <Link href="/" className="flex items-center">
-            <div className="flex items-center">
-              <div className="relative w-16 h-16">
-                <Image
-                  src="/logo.png"
-                  alt="Arshad Armoury Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <h1 className="font-heading text-xl tracking-widest ml-2">
-                {apppName.toUpperCase()}
-              </h1>
+        {/* Branding - Spans 4 columns */}
+        <div className="md:col-span-4">
+          <Link href="/" className="group flex items-center gap-3">
+            <div className="relative w-12 h-12 grayscale group-hover:grayscale-0 transition-all duration-500">
+              <Image
+                src="/logo.png"
+                alt="Arshad Armoury Logo"
+                fill
+                className="object-contain"
+              />
             </div>
+            <h1 className="font-serif text-2xl tracking-[0.15em] text-white">
+              {apppName.toUpperCase()}
+            </h1>
           </Link>
-          <p className="text-sm text-zinc-500 mt-3">
-            Arshad Armoury is a manufacturer and exporter of high-quality firearms, defense equipment, and precision parts. We are part of a family business with over 200 years of experience in the sporting arms and defense industry.
+          <p className="text-sm leading-relaxed text-zinc-500 mt-6 max-w-sm">
+            Forging excellence for over two centuries. Arshad Armoury specializes in premium defense equipment and precision craftsmanship, rooted in a family legacy that spans generations.
           </p>
+          <div className="flex gap-4 mt-6">
+             <Link href="#" className="hover:text-amber-600 transition-colors"><FaFacebook size={18}/></Link>
+             <Link href="#" className="hover:text-amber-600 transition-colors"><FaInstagram size={18}/></Link>
+             <Link href="#" className="hover:text-amber-600 transition-colors"><FaTwitter size={18}/></Link>
+          </div>
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="font-semibold text-white mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link href="/" className="hover:text-amber-700 transition">Home</Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-amber-700 transition">About Us</Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-amber-700 transition">Contact</Link>
-            </li>
-            <li>
-              <Link href="/faq" className="hover:text-amber-700 transition">FAQs</Link>
-            </li>
+        {/* Quick Links - Spans 2 columns */}
+        <div className="md:col-span-2">
+          <h3 className="text-[10px] uppercase tracking-[0.3em] text-amber-600 font-bold mb-6">Explore</h3>
+          <ul className="space-y-4 text-sm">
+            <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+            <li><Link href="/about" className="hover:text-white transition-colors">Our Legacy</Link></li>
+            <li><Link href="/contact" className="hover:text-white transition-colors">Inquiries</Link></li>
+            <li><Link href="/faq" className="hover:text-white transition-colors">Support</Link></li>
           </ul>
         </div>
 
-        {/* Categories + Subcategories */}
-        <div>
-          <h3 className="font-semibold text-white mb-3">Our Products</h3>
-          <ul className="space-y-2 text-sm">
-            {categories.map((cat) => (
-              <li key={cat.id}>
+        {/* Products - Spans 3 columns */}
+        <div className="md:col-span-3">
+          <h3 className="text-[10px] uppercase tracking-[0.3em] text-amber-600 font-bold mb-6">Collections</h3>
+          <div className="grid grid-cols-1 gap-6">
+            {categories.slice(0, 3).map((cat) => (
+              <div key={cat.id}>
                 <Link
                   href={`/categories/${cat.id}`}
-                  className="hover:text-amber-700 transition font-medium"
+                  className="text-zinc-200 hover:text-amber-500 transition-colors font-medium text-sm"
                 >
                   {cat.name}
                 </Link>
-                <ul className=" mt-1 space-y-1 text-zinc-400 text-sm max-h-48 overflow-y-auto">
-                  {subCategories
+                <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
+                   {subCategories
                     .filter((sub) => sub.categoryId === cat.id)
+                    .slice(0, 3) // Keep it clean
                     .map((sub) => (
-                      <li key={sub.id}>
-                        <Link
-                          href={`/categories/${cat.id}?sub=${sub.id}`}
-                          className="hover:text-amber-700 transition"
-                        >
-                          {sub.name}
-                        </Link>
-                      </li>
-                  ))}
-                </ul>
-              </li>
+                      <Link
+                        key={sub.id}
+                        href={`/categories/${cat.id}?sub=${sub.id}`}
+                        className="text-[11px] text-zinc-600 hover:text-zinc-300 transition-colors"
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
 
-        {/* Contact */}
-        <div>
-          <h3 className="font-semibold text-white mb-3">Contact Us</h3>
-             <ul className="space-y-2 text-sm">
-            <li className="flex items-center gap-2">
-              <FaPhone className="text-amber-700" /> <span>+92 300 1234567</span>
+        {/* Contact Info - Spans 3 columns */}
+        <div className="md:col-span-3">
+          <h3 className="text-[10px] uppercase tracking-[0.3em] text-amber-600 font-bold mb-6">The Workshop</h3>
+          <ul className="space-y-4 text-sm">
+            <li className="flex items-start gap-3">
+              <FaPhone className="mt-1 text-amber-700 shrink-0" />
+              <div>
+                <p className="text-zinc-500 text-[10px] uppercase tracking-tighter">Call Us</p>
+                <span className="text-zinc-300">+92 300 1234567</span>
+              </div>
             </li>
-            <li className="flex items-center gap-2">
-              <FaEnvelope className="text-amber-700" /> <span>info@arshadarmoury.com</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <FaFacebook className="text-amber-700" /> <Link href="https://facebook.com" className="hover:text-amber-700 transition">Facebook</Link>
-            </li>
-            <li className="flex items-center gap-2">
-              <FaInstagram className="text-amber-700" /> <Link href="https://instagram.com" className="hover:text-amber-700 transition">Instagram</Link>
-            </li>
-            <li className="flex items-center gap-2">
-              <FaTwitter className="text-amber-700" /> <Link href="https://twitter.com" className="hover:text-amber-700 transition">Twitter</Link>
+            <li className="flex items-start gap-3">
+              <FaEnvelope className="mt-1 text-amber-700 shrink-0" />
+              <div>
+                <p className="text-zinc-500 text-[10px] uppercase tracking-tighter">Email Inquiries</p>
+                <span className="text-zinc-300">info@arshadarmoury.com</span>
+              </div>
             </li>
           </ul>
         </div>
@@ -109,8 +102,14 @@ export default function Footer() {
       </div>
 
       {/* Bottom Copyright */}
-      <div className="mt-12 text-center text-xs text-zinc-500 border-t border-zinc-800 pt-4">
-        © {new Date().getFullYear()} Arshad Armoury — Forged in Steel. Bound by Legacy.
+      <div className="mt-20 pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-600">
+          © {new Date().getFullYear()} Arshad Armoury — Forged in Steel. Bound by Legacy.
+        </p>
+        <div className="flex gap-6 text-[10px] uppercase tracking-widest text-zinc-600">
+          <Link href="/privacy" className="hover:text-zinc-300 transition">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-zinc-300 transition">Terms of Service</Link>
+        </div>
       </div>
     </footer>
   )

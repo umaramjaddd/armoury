@@ -3,30 +3,38 @@ import Image from "next/image"
 
 export default function AboutSection() {
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-10">
-      {/* Left: Image */}
-      <div className="w-full md:w-1/2">
-        <div className="relative w-full h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
-          <Image
-            src="/logo.png" // replace with your image path
-            alt="Arshad Armoury"
-            fill
-            className="object-cover"
-          />
+    <section className="py-20 bg-zinc-50/50">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
+        {/* Left: Image with Decorative Frame */}
+        <div className="w-full md:w-1/2 relative">
+          <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-amber-600/30"></div>
+          <div className="relative z-10 w-full h-[450px] overflow-hidden shadow-2xl">
+            <Image
+              src="/logo.png" 
+              alt="Arshad Armoury Craftsmanship"
+              fill
+              className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+            />
+          </div>
+          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-amber-700/10 -z-0"></div>
         </div>
-      </div>
 
-      {/* Right: Text */}
-      <div className="w-full md:w-1/2">
-        <h2 className="text-3xl md:text-4xl font-heading text-zinc-900 mb-4">
-          About Arshad Armoury
-        </h2>
-        <p className="text-zinc-700 text-lg md:text-xl mb-6">
-          Arshad Armoury is dedicated to crafting premium leather goods and armour that combine tradition, craftsmanship, and style. Every piece is meticulously designed and handmade to ensure durability and elegance.
-        </p>
-        <p className="text-zinc-700 text-lg md:text-xl mb-6">
-          Our mission is to preserve the art of fine leatherwork and armour making while delivering products that our customers can cherish for years to come.
-        </p>
+        {/* Right: Text Content */}
+        <div className="w-full md:w-1/2">
+          <span className="text-amber-700 text-xs uppercase tracking-[0.4em] font-bold">Our Heritage</span>
+          <h2 className="text-4xl md:text-5xl font-serif text-zinc-900 mt-4 mb-8 leading-tight">
+            The Art of the <br/> Modern Blacksmith
+          </h2>
+          <div className="space-y-6 text-zinc-600 leading-relaxed font-light text-lg">
+            <p>
+              Arshad Armoury is dedicated to crafting premium leather goods and armour that combine tradition, craftsmanship, and style. Every piece is meticulously designed and handmade to ensure durability and elegance.
+            </p>
+            <p>
+              Our mission is to preserve the art of fine leatherwork and armour making while delivering products that our customers can cherish for years to come.
+            </p>
+          </div>
+          <div className="mt-10 signature-font text-3xl text-zinc-400">Arshad Armoury</div>
+        </div>
       </div>
     </section>
   )

@@ -37,17 +37,18 @@ export default function HomePage() {
   }, [dispatch, categories.length, products.length]);
 
   return (
-    <main className="gap-5 flex flex-col">
+    <main className="flex flex-col">
       <HeroSection />
       <div className="flex flex-col px-3 gap-8 max-w-7xl w-full self-center">
         <CategoryGrid />
-        <AllProducts />
+        <AllProducts title="Featured Collection" showAll="no" />
         <AboutSection />
         <FAQs />
-        <ContactSection />
-        <CTASection />
-        <ShowPieces />
       </div>
+        <ContactSection />
+   
+        <ShowPieces />
+   
     </main>
   );
 }

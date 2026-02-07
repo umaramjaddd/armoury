@@ -68,33 +68,34 @@ const faqs = [
 export default function FAQs() {
   const [openIndex, setOpenIndex] = useState(null)
 
-  const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
-
   return (
-    <section className="px-3 py-12">
-      <h2 className="text-3xl md:text-4xl font-heading text-zinc-900 mb-8 text-center">
-        Frequently Asked Questions
-      </h2>
-      <div className="space-y-4">
+    <section className="max-w-4xl mx-auto px-6 py-24">
+      <div className="text-center mb-16">
+        <h2 className="font-serif text-4xl text-zinc-900 mb-4">Common Inquiries</h2>
+        <p className="text-zinc-500 italic">Everything you need to know about our process</p>
+      </div>
+
+      <div className="divide-y divide-zinc-200">
         {faqs.map((faq, index) => (
-          <div
-            key={index}
-            className="border border-zinc-200  p-4 cursor-pointer hover:border-amber-700 transition"
-            onClick={() => toggleFAQ(index)}
-          >
-            <h3 className="text-lg md:text-xl font-medium text-zinc-900 flex justify-between items-center">
-              {faq.question}
-              <span className="ml-2 text-amber-700">
-                {openIndex === index ? "−" : "+"}
+          <div key={index} className="py-6">
+            <button
+              className="w-full flex justify-between items-center text-left group"
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            >
+              <span className={`text-lg transition-colors duration-300 ${openIndex === index ? 'text-amber-700 font-medium' : 'text-zinc-800'}`}>
+                {faq.question}
               </span>
-            </h3>
-            {openIndex === index && (
-              <p className="text-zinc-700 mt-2 text-sm md:text-base">
+              <span className={`transform transition-transform duration-300 ${openIndex === index ? 'rotate-45 text-amber-700' : 'text-zinc-400'}`}>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+                </svg>
+              </span>
+            </button>
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === index ? 'max-h-40 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+              <p className="text-zinc-600 leading-relaxed max-w-2xl">
                 {faq.answer}
               </p>
-            )}
+            </div>
           </div>
         ))}
       </div>

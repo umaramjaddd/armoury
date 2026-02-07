@@ -8,35 +8,45 @@ export default function CategoryCard({ category }) {
   return (
     <Link
       href={`/categories/${category.id}`}
-      className="group border max-w-[300px] w-full border-zinc-800 overflow-hidden shadow-sm hover:shadow-lg transition-transform transform hover:-translate-y-1 hover:border-amber-500"
+      className="group relative block aspect-[3/4] overflow-hidden bg-zinc-900"
     >
-      {/* Image */}
-      {category.image && (
-        <div className="relative w-full aspect-square  overflow-hidden">
-          {isLocal ? (  
-            <Image
-              src={category.image}
-              alt={category.name}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : (
-            <img
-              src={category.image}
-              alt={category.name}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          )}
-        </div>
-      )}
+      {/* Image Container */}
+      <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 opacity-80 group-hover:opacity-100">
+        {isLocal ? (
+          <Image
+            src={category.image}
+            alt={category.name}
+            fill
+            className="object-cover"
+          />
+        ) : (
+          <img
+            src={category.image}
+            alt={category.name}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
 
-      {/* Text */}
-      <div className="p-4 bg-zinc-900/5 group-hover:bg-zinc-900/10 transition">
-        <h3 className="font-heading text-lg text-zinc-900 group-hover:text-amber-600 transition">
+      {/* Aesthetic Overlay: Dark gradient from bottom */}
+      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 w-full p-6 text-center transform transition-transform duration-500 group-hover:-translate-y-2">
+        {/* Accent Line */}
+        <div className="w-8 h-[1px] bg-amber-500 mx-auto mb-3 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+        
+        <h3 className="font-serif text-2xl text-white tracking-wide">
           {category.name}
         </h3>
-        <p className="text-sm text-zinc-500 mt-2">{category.description}</p>
+        
+        <p className="text-zinc-300 text-xs uppercase tracking-[0.2em] mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          Explore Collection
+        </p>
       </div>
+
+      {/* Subtle Inner Border on Hover */}
+      <div className="absolute inset-4 border border-white/0 group-hover:border-white/20 transition-all duration-500 pointer-events-none"></div>
     </Link>
   )
 }
