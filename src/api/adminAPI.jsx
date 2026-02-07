@@ -42,32 +42,81 @@ export const addCategory = async (category, file) => {
 };
 
 
-// Update Category
-export const updateCategory = async (id, updates, file) => {
-  let imageUrl = updates.image || null;
 
-  if (file) {
-    // Upload new image (upsert true so it replaces if same path)
-    const filePath = `images/${Date.now()}_${file.name}`;
+
+// Update Category
+// export const updateCategory = async (id, updates, file) => {
+//   let imageUrl = updates.image; // Keep the existing URL passed from the state
+
+//   if (file) {
+//     const fileName = `${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
+//     const filePath = `images/${fileName}`;
+    
+//     const { data: uploadData, error: uploadError } = await supabase.storage
+//       .from("categories")
+//       .upload(filePath, file, { upsert: true });
+
+//     if (uploadError) throw uploadError;
+
+//     // Correct way to get publicUrl in newer Supabase versions
+//     const { data: publicData } = supabase.storage
+//       .from("categories")
+//       .getPublicUrl(filePath);
+      
+//     imageUrl = publicData.publicUrl;
+//   }
+
+//   // If no file was uploaded and updates.image was empty, 
+//   // this would overwrite the DB with null. 
+//   // Ensure we are passing the 'imageUrl' we just determined.
+//   const { data, error } = await supabase
+//     .from("categories")
+//     .update({ ...updates, image: imageUrl })
+//     .eq("id", id)
+//     .select(); // Added select() to return the updated data
+
+//   if (error) throw error;
+//   return data;
+// };
+
+
+export const updateCategory = async (id, updates, file) => {
+  let imageUrl = updates.image; // Starts with the existing image URL
+
+  // ONLY try to upload if a new file actually exists
+  if (file && file instanceof File) {
+    const fileName = `${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
+    const filePath = `images/${fileName}`;
+    
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from("categories")
       .upload(filePath, file, { upsert: true });
 
     if (uploadError) throw uploadError;
 
-    const { publicUrl } = supabase.storage.from("categories").getPublicUrl(filePath);
-    imageUrl = publicUrl;
+    const { data: publicData } = supabase.storage
+      .from("categories")
+      .getPublicUrl(filePath);
+      
+    imageUrl = publicData.publicUrl;
   }
+
+  // We remove the image from the 'updates' object before spreading 
+  // so we don't accidentally overwrite it with an old/empty value.
+  const { image, ...restOfUpdates } = updates;
 
   const { data, error } = await supabase
     .from("categories")
-    .update({ ...updates, image: imageUrl })
-    .eq("id", id);
+    .update({ 
+      ...restOfUpdates, 
+      image: imageUrl // This will be the NEW url if file exists, or the OLD url if not
+    })
+    .eq("id", id)
+    .select();
 
   if (error) throw error;
   return data;
 };
-
 // Delete category
 export const deleteCategory = async (id) => {
   // 1. Get the category first to know its image path

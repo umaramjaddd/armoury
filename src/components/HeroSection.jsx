@@ -30,14 +30,14 @@ export default function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/contact">
+          <Link href="https://wa.me/923080903030" target="_blank">
             <button className="px-10 py-4 bg-amber-700 text-white font-bold tracking-widest uppercase text-xs
                              hover:bg-amber-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
               Contact Us
             </button>
           </Link>
           
-          <Link href="/gallery">
+          <Link href="/products">
             <button className="px-10 py-4 border border-white text-white font-bold tracking-widest uppercase text-xs
                              hover:bg-white hover:text-zinc-900 transition-all duration-300">
               View Collection

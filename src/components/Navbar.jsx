@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between px-6">
           <Link href="/" className="flex items-center group">
             <div className="relative w-12 h-12">
-              <Image src="/logo.png" alt="Logo" fill className={`object-contain transition-all ${!scrolled && "brightness-0"}`} />
+              <Image src="/logo.png" alt="Logo" fill className="object-contain transition-all"/>
             </div>
             <h1 className="font-serif text-xl tracking-[0.2em] ml-3 uppercase">{apppName}</h1>
           </Link>
@@ -111,4 +111,4 @@ export default function Navbar() {
       </header>
     </>
   );
-}
+} 
